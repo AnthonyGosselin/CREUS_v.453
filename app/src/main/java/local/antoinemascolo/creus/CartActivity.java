@@ -104,6 +104,7 @@ public class CartActivity extends AppCompatActivity {
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Balance insuffisante :(", Toast.LENGTH_LONG).show();
                                     //error.start();
+
                                 }
                           //  }
                         }
