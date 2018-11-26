@@ -25,6 +25,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     BluetoothAdapter mBluetoothAdapter;
     public static InputStream currInputStream;
     private static final int REQUEST_CODE_QR_SCAN = 101;
+    MediaPlayer sound;
 
 
     @Override
@@ -171,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 Log.e("loadDataFromFile", "File exists");
-             boolean deleted = fetchedFile.delete();
+             /*boolean deleted = fetchedFile.delete();
                 Log.e("loadDataFromFile", "File deleted: " + deleted); //*/
             }
 
@@ -315,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(resultCode != Activity.RESULT_OK)
         {
-            Log.d("LOGTAG","COULD NOT GET A GOOD RESULT.");
+            Log.d("debugQR","COULD NOT GET A GOOD RESULT.");
             if(data==null)
                 return;
             //Getting the passed result
@@ -342,17 +344,11 @@ public class MainActivity extends AppCompatActivity {
                 return;
             //Getting the passed result
             String result = data.getStringExtra("com.blikoon.qrcodescanner.got_qr_scan_relult");
-            Log.d("LOGTAG","Have scan result in your app activity :"+ result);
-            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-            alertDialog.setTitle("Scan result");
-            alertDialog.setMessage(result);
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            alertDialog.show();
+            Log.e("debugQR","Have scan result in your app activity :"+ result);
+            Intent addToCart = new Intent(MainActivity.this, PopUpActivity.class);//OUINNNNNN
+            addToCart.putExtra("nom", result);
+            addToCart.putExtra("description", allItems.get(result).getDescription());
+            startActivity(addToCart);
 
         }
     }

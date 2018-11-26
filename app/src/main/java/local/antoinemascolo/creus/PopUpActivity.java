@@ -47,6 +47,12 @@ public class PopUpActivity extends Activity {
 
         titre.setText(nom);
         description.setText(desc);
+        /*if(nom.equals("Avion")){
+            description.setText("Boeing 737 deluxe pouvant contenir 20 passagers.");
+        }else{
+            description.setText(MainActivity.allItems.get(nom).getDescription());
+        }*/
+
 
         add.setOnClickListener(new View.OnClickListener(){
             @Override
