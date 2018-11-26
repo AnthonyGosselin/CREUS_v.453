@@ -1,6 +1,7 @@
 package local.antoinemascolo.creus;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -14,41 +15,14 @@ public class Cart{
     }
 
     public boolean addItem(String itemName, int amount){
-        /*Object itemReference = allItems.get(itemName);
-
-        if (itemReference == null){
-            Log.e("Cart","Error adding " + itemName + " to cart: this item doesn't exist in stock!");
-            return false;
-        }
-
-        int availableAmount = itemReference.getQtyLeft();
-
-        //Are there already items like this one in the cart?
-        int currAmountInCart = 0;
-        int newAmount;
-        Object itemInCart = cartItems.get(itemName);
-        if (itemInCart != null){
-            currAmountInCart = itemInCart.getQtyLeft();
-        }
-        newAmount = currAmountInCart + amount;
-
-        if ( availableAmount < newAmount ){
-            Log.e("Cart","Cannot add " + itemName + " to cart (missing " + (newAmount - availableAmount) + " in stock)");
-            return false;
-        }
-
-        Object newItem = new Object(itemName, itemReference.getItemPrice(), newAmount, itemReference.getItemImage());
-        cartItems.put(itemName, newItem);
-        Log.e("Cart","Added: " + amount + " " + itemName + " to cart (new total: " + newAmount + ")");
-
-        return true;
-    }*/
         Object itemReference = allItems.get(itemName);
 
-        if (itemReference == null){
-            Log.e("Cart","Error adding " + itemName + " to cart: this item doesn't exist in stock!");
+        if (itemReference == null || itemReference.getQtyLeft() <= 0){
+            Log.e("Cart", "Error adding " + itemName + " to cart: this item doesn't exist in stock!");
             return false;
         }
+
+        Log.d("CartClass", Integer.toString(itemReference.getQtyLeft()));
 
         int availableAmount = itemReference.getQtyLeft();
 
@@ -86,28 +60,6 @@ public class Cart{
                 //cartItems.remove(itemName);
                 cartItems.get(itemName).setQtyLeft(newAmount);
                 Log.e("Cart","Removed all " + itemName + " items from cart");
-            }
-            else{
-                cartItems.get(itemName).setQtyLeft(newAmount);
-                Log.e("Cart","Removed " + amount + " " + itemName + " items from cart (new total: " + newAmount + ")");
-            }
-        }
-        else{
-            Log.e("Cart","Did not remove " + itemName + " item because it was never in the cart!");
-        }
-    }
-
-    public void removeItemNoDelete(String itemName, int amount){
-        Object itemInCart = cartItems.get(itemName);
-
-        if (itemInCart != null){
-            int newAmount = (itemInCart.getQtyLeft() - amount);
-            if (newAmount < 0){ newAmount = 0; }
-
-            if (newAmount == 0){
-                cartItems.get(itemName).setQtyLeft(newAmount);
-                Log.e("Cart","Removed all " + itemName + " items from cart");
-                //cartItems.remove(itemName);
             }
             else{
                 cartItems.get(itemName).setQtyLeft(newAmount);

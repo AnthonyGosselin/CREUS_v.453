@@ -52,7 +52,10 @@ public class PopUpActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-                MainActivity.myCart.addItem(nom,1);
+                Boolean success = MainActivity.myCart.addItem(nom,1);
+                if (!success){
+                    Toast.makeText(getApplicationContext(), "Cet article n'est plus en inventaire et ne peut pas être ajouté au panier.", Toast.LENGTH_LONG).show();
+                }
                 finish();
             }
         });
@@ -63,7 +66,7 @@ public class PopUpActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-                if(MainActivity.currInputStream == null){
+                if(MainActivity.currInputStream != null){
                     MainActivity.mBluetoothConnection.write(Integer.toString(MainActivity.allItems.get(nom).getItemPlace()).getBytes(Charset.forName("UTF-8")));
                     Toast.makeText(getApplicationContext(),"Veuillez suivre le CREUS!",Toast.LENGTH_LONG).show();
                     sound.start();
