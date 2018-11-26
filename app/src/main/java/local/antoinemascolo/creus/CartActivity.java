@@ -25,8 +25,8 @@ public class CartActivity extends AppCompatActivity {
     private Button pay;
     public static TextView grandTotal;
 
-    final MediaPlayer goodsound = MediaPlayer.create(this, R.raw.goodbeep);
-    final MediaPlayer error = MediaPlayer.create(this, R.raw.error);
+    private MediaPlayer goodsound;
+    private MediaPlayer error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,8 @@ public class CartActivity extends AppCompatActivity {
         pay = (Button) findViewById(R.id.buttonPayer);
         grandTotal = (TextView) findViewById(R.id.grandTotal);
         grandTotal.setText(String.format("%.2f", MainActivity.myCart.getBalance()) + "$");
+        goodsound = MediaPlayer.create(this, R.raw.goodbeep);
+        error = MediaPlayer.create(this, R.raw.error);
 
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
