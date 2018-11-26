@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.nfc.Tag;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,8 +25,8 @@ public class CartActivity extends AppCompatActivity {
     private Button pay;
     public static TextView grandTotal;
 
-   // final MediaPlayer goodsound = MediaPlayer.create(this, R.raw.goodbeep);
-    //final MediaPlayer error = MediaPlayer.create(this, R.raw.error);
+    final MediaPlayer goodsound = MediaPlayer.create(this, R.raw.goodbeep);
+    final MediaPlayer error = MediaPlayer.create(this, R.raw.error);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,35 +56,29 @@ public class CartActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Veuillez vous connecter au CREUS", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Veuillez passez votre carte pour payer", Toast.LENGTH_LONG).show();
-                    Log.d(TAG, "Getting ready to read card");
 
-                    //Envoie de la commande pour la carte
-                    String strCom = "S";
-                    MainActivity.mBluetoothConnection.write(strCom.getBytes(Charset.forName("UTF-8")));
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "Getting ready to read card");
 
-                    Log.d(TAG, "Sent 'S' ");
+                            //Envoie de la commande pour la carte
+                            String strCom = "S";
+                            MainActivity.mBluetoothConnection.write(strCom.getBytes(Charset.forName("UTF-8")));
 
-                    /*String confirmationMsg = bluetoothRead();
-                    Log.d(TAG, "Msg return: "+confirmationMsg);
-                    Log.d(TAG, Boolean.toString(confirmationMsg.equals("Ready")));
-                    int loop = 0;
-                    while (!confirmationMsg.equals("Ready")){
-                        loop++;
-                        confirmationMsg = bluetoothRead();
-                    }*/
+                            Log.d(TAG, "Sent 'S' ");
 
-                   // if (confirmationMsg.equals("Ready")) {
-                        //Log.d(TAG, "CONFIRMATION RECUE");
-                        //Scan pour carte
-                        Boolean gotCard = false;
+                            //Scan pour carte
+                            Boolean gotCard = false;
 
-                        while (!gotCard) {
-                            // Read from the InputStream
-                            Log.d(TAG, "Is connected to inputStream");
+                            while (!gotCard) {
+                                // Read from the InputStream
+                                Log.d(TAG, "Is connected to inputStream");
 
-                            String incomingMessage = bluetoothRead();
+                                String incomingMessage = bluetoothRead();
 
-                           // if (incomingMessage.matches("(.*)C(.*)")) {
+                                // if (incomingMessage.matches("(.*)C(.*)")) {
                                 //Commande de compte qui paye
                                 gotCard = true;
                                 //Integer.parseInt(incomingMessage.replaceAll("[\\D]", ""));
@@ -99,18 +94,18 @@ public class CartActivity extends AppCompatActivity {
                                     MainActivity.writeDataToFileInventory(MainActivity.allItems);
                                     MainActivity.writeDataToFileAccount(MainActivity.accounts);
                                     Toast.makeText(getApplicationContext(), "Succès de l'achat. Merci :)", Toast.LENGTH_LONG).show();
-                                    //  goodsound.start();
+                                    goodsound.start();
                                     startActivity(new Intent(CartActivity.this, ShopActivity.class));
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Balance insuffisante :(", Toast.LENGTH_LONG).show();
-                                    //error.start();
-
+                                    error.start();
                                 }
-                          //  }
+                                //  }
+                            }
+                            // }
                         }
-                   // }
+                    }, 2000);
                 }
-
             }
         });
     }
@@ -122,7 +117,6 @@ public class CartActivity extends AppCompatActivity {
         Log.d(TAG, "Bluetooth read start");
 
         try{
-            Log.d(TAG, "hello?");
             bytes = MainActivity.currInputStream.read(buffer);
             incomingMessage = new String(buffer, 0, bytes);
             Log.d(TAG, "Card msg received: " + incomingMessage);
