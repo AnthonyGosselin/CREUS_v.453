@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             File fetchedFile = new File(Environment.getExternalStorageDirectory(), "Inventaire.txt");
             FileWriter fileWriter = new FileWriter(fetchedFile);
             PrintWriter printWriter = new PrintWriter(fileWriter);
-            Log.e("writeDataToFile", "Saving to invenrtory file...");
+            Log.e("writeDataToFile", "Saving to inventory file...");
 
             for (String item : itemList.keySet()){
                 Object obj = itemList.get(item);
@@ -190,9 +190,9 @@ public class MainActivity extends AppCompatActivity {
         //Lorsqu'il n'y a pas de fichier 'Account', cette fonction est executee pour creer l'inventaire par defaut
         Log.e("CreateDefaultAccount", "Creating default account...");
 
-        defaultAccount.add(new Account(1,1267.28));
-        defaultAccount.add(new Account(2,5467));
-        defaultAccount.add(new Account(3, 12234245.12));
+        defaultAccount.add(new Account(0,1267.28));
+        defaultAccount.add(new Account(1,5467));
+        defaultAccount.add(new Account(2, 12234245.12));
 
     }
 
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 Account account = accountList.get(i);
                 printWriter.print(account.getId() + "\t");
                 printWriter.print(account.getBalance() + "\n");
-                Log.d(TAG, "Account " + account.getId() + " new balance: " + account.getBalance());
+                Log.e(TAG, "Account " + account.getId() + " new balance: " + account.getBalance());
             }
 
             printWriter.close();
