@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':qrcodescanner'
+project(':qrcodescanner').projectDir = new File('QRCodeScanner-0.1.2/QRCodeScanner-0.1.2/qrcodescanner')

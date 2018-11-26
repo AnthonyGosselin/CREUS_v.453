@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/QRCodeScanner-0.1.2/QRCodeScanner-0.1.2/qrcodescanner" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

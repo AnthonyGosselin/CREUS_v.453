@@ -24,9 +24,6 @@ public class CartActivity extends AppCompatActivity {
     private Button pay;
     public static TextView grandTotal;
 
-   // final MediaPlayer goodsound = MediaPlayer.create(this, R.raw.goodbeep);
-    //final MediaPlayer error = MediaPlayer.create(this, R.raw.error);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +43,9 @@ public class CartActivity extends AppCompatActivity {
         grandTotal = (TextView) findViewById(R.id.grandTotal);
         grandTotal.setText(String.format("%.2f", MainActivity.myCart.getBalance()) + "$");
 
+        final MediaPlayer paidsound = MediaPlayer.create(this,R.raw.goodbeep);
+        final MediaPlayer errorsound = MediaPlayer.create(this,R.raw.error);
+
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +53,7 @@ public class CartActivity extends AppCompatActivity {
                 if (MainActivity.currInputStream == null) {
                     Log.e(TAG, "No input stream for payment!");
                     Toast.makeText(getApplicationContext(), "Veuillez vous connecter au CREUS", Toast.LENGTH_LONG).show();
+                    errorsound.start();
                 } else {
                     Toast.makeText(getApplicationContext(), "Veuillez passez votre carte pour payer", Toast.LENGTH_LONG).show();
                     Log.d(TAG, "Getting ready to read card");
@@ -99,11 +100,11 @@ public class CartActivity extends AppCompatActivity {
                                     MainActivity.writeDataToFileInventory(MainActivity.allItems);
                                     MainActivity.writeDataToFileAccount(MainActivity.accounts);
                                     Toast.makeText(getApplicationContext(), "Succès de l'achat. Merci :)", Toast.LENGTH_LONG).show();
-                                    //  goodsound.start();
+                                    paidsound.start();
                                     startActivity(new Intent(CartActivity.this, ShopActivity.class));
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Balance insuffisante :(", Toast.LENGTH_LONG).show();
-                                    //error.start();
+                                    errorsound.start();
 
                                 }
                           //  }

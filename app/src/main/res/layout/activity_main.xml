@@ -11,9 +11,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
         android:layout_weight="1"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/trubuchet_logo" />
 
     <Button
         android:id="@+id/buttonFindCREUS"
@@ -21,16 +20,29 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="100dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button"
         android:text="Trouver un CREUS" />
 
     <Button
         android:id="@+id/buttonShop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button"
+        android:text="Magasiner" />
+
+    <Button
+        android:id="@+id/buttonScan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:layout_marginEnd="100dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="25dp"
-        android:text="Magasiner" />
+        android:background="@drawable/button"
+        android:text="Scan"
+        android:textAlignment="center" />
 </android.support.v7.widget.LinearLayoutCompat>
