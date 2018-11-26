@@ -52,7 +52,10 @@ public class PopUpActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-                MainActivity.myCart.addItem(nom,1);
+                Boolean success = MainActivity.myCart.addItem(nom,1);
+                if (!success){
+                    Toast.makeText(getApplicationContext(), "Cet article n'est plus en inventaire et ne peut pas être ajouté au panier.", Toast.LENGTH_LONG).show();
+                }
                 finish();
             }
         });
