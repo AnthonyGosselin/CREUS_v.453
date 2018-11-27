@@ -56,9 +56,9 @@ public class CartActivity extends AppCompatActivity {
                 if (MainActivity.myCart.getBalance() > 0) {
                     if (MainActivity.currInputStream == null) {
                         Log.e(TAG, "No input stream for payment!");
-                        Toast.makeText(getApplicationContext(), "Veuillez vous connecter au CREUS", Toast.LENGTH_LONG).show();
+                        MainActivity.newToast(getApplicationContext(), "Veuillez vous connecter au CREUS");
                     } else {
-                        Toast.makeText(getApplicationContext(), "Veuillez passez votre carte pour payer", Toast.LENGTH_LONG).show();
+                        MainActivity.newToast(getApplicationContext(), "Veuillez passez votre carte pour payer");
 
                         final Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
@@ -97,16 +97,16 @@ public class CartActivity extends AppCompatActivity {
                                             MainActivity.myCart.checkOut();
                                             MainActivity.writeDataToFileInventory(MainActivity.allItems);
                                             MainActivity.writeDataToFileAccount(MainActivity.accounts);
-                                            Toast.makeText(getApplicationContext(), "Succès de l'achat. Merci :)", Toast.LENGTH_LONG).show();
+                                            MainActivity.newToast(getApplicationContext(), "Succès de l'achat. Merci :)");
                                             goodsound.start();
                                             startActivity(new Intent(CartActivity.this, ShopActivity.class));
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "Balance insuffisante :(", Toast.LENGTH_LONG).show();
+                                            MainActivity.newToast(getApplicationContext(), "Balance insuffisante :(");
                                             error.start();
                                         }
                                     }
                                     else{
-                                        Toast.makeText(getApplicationContext(), "Échec du paiement", Toast.LENGTH_LONG).show();
+                                        MainActivity.newToast(getApplicationContext(), "Échec du paiement");
                                         Log.e(TAG, "Payment failed: nothing charged");
                                     }
                                 }
@@ -115,7 +115,7 @@ public class CartActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Votre panier est vide!", Toast.LENGTH_LONG).show();
+                    MainActivity.newToast(getApplicationContext(), "Votre panier est vide!");
                 }
             }
         });

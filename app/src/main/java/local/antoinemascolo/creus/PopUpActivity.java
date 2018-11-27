@@ -60,7 +60,7 @@ public class PopUpActivity extends Activity {
             {
                 Boolean success = MainActivity.myCart.addItem(nom,1);
                 if (!success){
-                    Toast.makeText(getApplicationContext(), "Cet article n'est plus en inventaire et ne peut pas être ajouté au panier.", Toast.LENGTH_LONG).show();
+                    MainActivity.newToast(getApplicationContext(), "Cet article n'est plus en inventaire et ne peut pas être ajouté au panier.");
                 }
                 finish();
             }
@@ -74,10 +74,10 @@ public class PopUpActivity extends Activity {
             {
                 if(MainActivity.currInputStream != null){
                     MainActivity.mBluetoothConnection.write(Integer.toString(MainActivity.allItems.get(nom).getItemPlace()).getBytes(Charset.forName("UTF-8")));
-                    Toast.makeText(getApplicationContext(),"Veuillez suivre le CREUS!",Toast.LENGTH_LONG).show();
+                    MainActivity.newToast(getApplicationContext(), "Veuillez suivre le CREUS!");
                     sound.start();
                 }else{
-                    Toast.makeText(getApplicationContext(),"Veuillez vous connecter au CREUS!",Toast.LENGTH_LONG).show();
+                    MainActivity.newToast(getApplicationContext(), "Veuillez vous connecter au CREUS!");
                 }
             }
         });
