@@ -343,12 +343,27 @@ public class MainActivity extends AppCompatActivity {
             if(data==null)
                 return;
             //Getting the passed result
+
             String result = data.getStringExtra("com.blikoon.qrcodescanner.got_qr_scan_relult");
             Log.e("debugQR","Have scan result in your app activity :"+ result);
-            Intent addToCart = new Intent(MainActivity.this, PopUpActivity.class);//OUINNNNNN
-            addToCart.putExtra("nom", result);
-            addToCart.putExtra("description", allItems.get(result).getDescription());
-            startActivity(addToCart);
+
+            boolean inStock = false;
+            for(String item : allItems.keySet()){
+                if(item.equals(result)){
+                    inStock = true;
+                    break;
+                }
+            }
+            if(inStock){
+
+                Intent addToCart = new Intent(MainActivity.this, PopUpActivity.class);//OUINNNNNN
+                addToCart.putExtra("nom", result);
+                addToCart.putExtra("description", allItems.get(result).getDescription());
+                startActivity(addToCart);
+            }else{
+                Toast.makeText(getApplicationContext(),"Cet article n'est pas en stock", Toast.LENGTH_LONG).show();
+            }
+
 
         }
     }
