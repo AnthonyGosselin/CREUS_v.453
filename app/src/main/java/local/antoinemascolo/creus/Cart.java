@@ -3,6 +3,7 @@ package local.antoinemascolo.creus;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Cart{
@@ -117,16 +118,23 @@ public class Cart{
 
     public void UpdateNullItems(){
         //Update for items at qty = 0
+        ArrayList<String> removeList = new ArrayList<>();
+
         for (String name : cartItems.keySet()){
-           // Log.d("Cart", "Item: " + name);
+            //Log.d("Cart", "Item: " + name);
 
             if (getObject(name).getQtyLeft() == 0){
-                //Log.d("Cart", "Item at 0!");
-                MainActivity.myCart.getCartItems().remove(name);
+                Log.d("Cart", "Item at 0!");
+                removeList.add(name);
             }
             else{
                 //Log.d("Cart", name + " left: " + getObject(name).getQtyLeft());
             }
+        }
+
+        for (String name : removeList){
+            Log.d("Cart", "Removing: " + name);
+            MainActivity.myCart.getCartItems().remove(name);
         }
     }
 }

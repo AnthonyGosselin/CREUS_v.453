@@ -3,6 +3,7 @@ package local.antoinemascolo.creus;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -14,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 
 import com.blikoon.qrcodescanner.QrCodeActivity;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static InputStream currInputStream;
     private static final int REQUEST_CODE_QR_SCAN = 101;
     MediaPlayer sound;
-
+    public static Toast currToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 Log.e("loadDataFromFile", "File exists");
-             /*boolean deleted = fetchedFile.delete();
+                /*boolean deleted = fetchedFile.delete();
                 Log.e("loadDataFromFile", "File deleted: " + deleted); //*/
             }
 
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 Log.e("loadDataFromFile", "File exists");
-                boolean deleted = fetchedFile.delete();
+               /* boolean deleted = fetchedFile.delete();
                 Log.e("loadDataFromFile", "File deleted: " + deleted); //*/
             }
 
@@ -366,5 +366,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public static void newToast(Context context, String msg){
+        Log.d("Toasty", "New toast");
+        if (currToast != null){
+            Log.d("Toasty", "Deleting old toast");
+            currToast.cancel();
+        }
+
+        currToast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
+        currToast.show();
     }
 }
